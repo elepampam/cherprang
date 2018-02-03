@@ -110,7 +110,7 @@ app.post('/webhook', (req,res,next) => {
       if (webhookEvent.message) {
         handleMessage(senderPsid, webhookEvent.message);
       } else if (webhookEvent.postback) {
-        handlePostback(senderPsid, webhook_event.postback);
+        handlePostback(senderPsid, webhookEvent.postback);
       }
     });
     res.status(200).send('EVENT_RECEIVED');
