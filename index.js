@@ -37,7 +37,7 @@ function handleDigimon(senderPsid, digimonName){
         }
       }
     }
-    callSendAPI(sender_psid, response);
+    callSendAPI(senderPsid, response);
   })
   .catch(err => {
     console.log(err)
