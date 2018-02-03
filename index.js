@@ -3,6 +3,7 @@ const
   bodyParser = require('body-parser'),
   token = require('./token'),
   pageAccessToken = token.pageAccessToken,
+  request = require('request'),
   app = express().use(bodyParser.json());
 
 app.listen(process.env.PORT || 4000, () => { console.log('listening on 4000')});
@@ -50,7 +51,7 @@ function callSendAPI(sender_psid, response) {
     } else {
       console.error("Unable to send message:" + err);
     }
-  }); 
+  });
 }
 
 
