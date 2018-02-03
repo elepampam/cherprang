@@ -8,6 +8,40 @@ const
 
 app.listen(process.env.PORT || 4000, () => { console.log('listening on 4000')});
 
+function handleDigimon(senderPsid, digimonName){
+  axios.get(`https://uofdmo-api.herokuapp.com/digimon/${digimonName}`)
+  .then(res => {
+    response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": res.data.data.info.name.english.toUpperCase(),
+            "subtitle": "Atribute: "+res.data.data.info.attribute.name+"<br />element: "+res.data.data.info.element.name,
+            "image_url": res.data.data.info.image,
+            "buttons": [
+              {
+                "type": "postback",
+                "title": "Yes!",
+                "payload": "yes",
+              },
+              {
+                "type": "postback",
+                "title": "No!",
+                "payload": "no",
+              }
+            ],
+          }]
+        }
+      }
+    }
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
 
@@ -15,11 +49,16 @@ function handleMessage(sender_psid, received_message) {
 
     // Check if the message contains text
     if (received_message.text) {
-
-      // Create the payload for a basic text message
-      response = {
-        "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      let text = received_message.text.split('#')
+      if (text[0].toLowerCase() === 'digimon') {
+        handleDigimon(sender_psid, text[1])
       }
+      else{
+        response = {
+          "text": `You sent the message: "${received_message.text}". Now send me an image!`
+        }
+      }
+      // Create the payload for a basic text message
     }
     else if (received_message.attachments) {
 
@@ -53,7 +92,6 @@ function handleMessage(sender_psid, received_message) {
     }
 
     // Sends the response message
-    callSendAPI(sender_psid, response);
     callSendAPI(sender_psid, response);
 }
 
