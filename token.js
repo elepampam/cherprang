@@ -1,0 +1,3 @@
+module.exports = {
+  pageAccessToken:  "EAACGmbrUFegBAGgcqHjfKaJw74eds2iWu1wZAKzbZA71wtTf4C7YkmcKrCEMmuXCVAVW7CnyQdFQcdhD6VWYuMzxJoZBHLfqDdHCukAd68i52oJhx4WVFvpLrylRTH9czaokyqumrYU46bETmIv403X1jF7ApBZCKZA0puY1jKAZDZD"
+}
