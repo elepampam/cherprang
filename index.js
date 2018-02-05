@@ -63,7 +63,7 @@ function handleMessage(sender_psid, received_message) {
           let cities = response.data.data.cities;
           let text = "";
           cities.map(city => {
-            text += `${city}\n`
+            text += `${city} | `
           })
           console.log(text);
           callSendAPI(sender_psid, "list kota yang tersedia: \n"+text);
