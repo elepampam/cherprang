@@ -55,21 +55,19 @@ function handleMessage(sender_psid, received_message) {
       if (text[0].toLowerCase() === 'digimon') {
         handleDigimon(sender_psid, text[1])
       }
-      else if (text[0].toLowerCase() === 'nonton') {
-        if (text[1] == "") {
-          axios.get('https://nonton-api.herokuapp.com/bioskop')
-          .then(response => {
-            let cities = response.data.data.cities;
-            let text = "";
-            cities.map(city => {
-              text += `${city}\n`
-            })
-            callSendAPI(sender_psid, text);
+      else if (text.toLowerCase() === 'nonton') {
+        axios.get('https://nonton-api.herokuapp.com/bioskop')
+        .then(response => {
+          let cities = response.data.data.cities;
+          let text = "";
+          cities.map(city => {
+            text += `${city}\n`
           })
-          .catch(err => {
-            console.log(err);
-          })
-        }
+          callSendAPI(sender_psid, text);
+        })
+        .catch(err => {
+          console.log(err);
+        })
       }
       else{
         response = {
