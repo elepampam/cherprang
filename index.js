@@ -63,7 +63,7 @@ function handleMessage(sender_psid, received_message) {
           cities.map(city => {
             text += `${city}\n`
           })
-          callSendAPI(sender_psid, text);
+          callSendAPI(sender_psid, "list kota yang tersedia: \n"+text);
         })
         .catch(err => {
           console.log(err);
