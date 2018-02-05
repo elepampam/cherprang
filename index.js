@@ -56,18 +56,16 @@ function handleBioskop(sender_psid, res){
 
   res.data.bioskop.map(bioskopItem => {
     response.attachment.payload.elements.push({
-      {
-        "title": bioskopItem.name,
-        "subtitle": "",
-        "image_url": bioskopItem.img,
-        "buttons": [
-          {
-            "type": "postback",
-            "title": "See Movie",
-            "payload": "see",
-          }
-        ],
-      }
+      "title": bioskopItem.name,
+      "subtitle": "",
+      "image_url": bioskopItem.img,
+      "buttons": [
+        {
+          "type": "postback",
+          "title": "See Movie",
+          "payload": "see",
+        }
+      ],
     });
   });
   callSendAPI(senderPsid, response);
