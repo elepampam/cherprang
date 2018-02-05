@@ -43,7 +43,35 @@ function handleDigimon(senderPsid, digimonName){
     console.log(err)
   })
 }
+function handleBioskop(sender_psid, res){
+  response = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": []
+      }
+    }
+  }
 
+  res.data.bioskop.map(bioskopItem => {
+    response.attachment.payload.elements.push({
+      {
+        "title": bioskopItem.name,
+        "subtitle": "",
+        "image_url": bioskopItem.img,
+        "buttons": [
+          {
+            "type": "postback",
+            "title": "See Movie",
+            "payload": "see",
+          }
+        ],
+      }
+    });
+  });
+  callSendAPI(senderPsid, response);
+}
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
 
@@ -55,22 +83,33 @@ function handleMessage(sender_psid, received_message) {
       if (text[0].toLowerCase() === 'digimon') {
         handleDigimon(sender_psid, text[1])
       }
-      else if (received_message.text.toLowerCase() === 'nonton') { //nonton
+      else if (text[0].toLowerCase() === 'nonton') { //nonton
         console.log('masuk sini')
-        axios.get('https://nonton-api.herokuapp.com/bioskop')
-        .then(response => {
-          console.log(response.data.data)
-          let cities = response.data.data.cities;
-          let text = "";
-          cities.map(city => {
-            text += `${city} | `
+        if (text[1] == "") {
+          axios.get('https://nonton-api.herokuapp.com/bioskop')
+          .then(response => {
+            // console.log(response.data.data)
+            let cities = response.data.data.cities;
+            let text = "";
+            cities.map(city => {
+              text += `${city} | `
+            })
+            // console.log(text);
+            callSendAPI(sender_psid, "list kota yang tersedia: \n"+text);
           })
-          console.log(text);
-          callSendAPI(sender_psid, "list kota yang tersedia: \n"+text);
-        })
-        .catch(err => {
-          console.log(err);
-        })
+          .catch(err => {
+            console.log(err);
+          })
+        }
+        else{
+          axios.get(`https://nonton-api.herokuapp.com/bioskop/${text[1]}`)
+          .then(response => {
+            handleBioskop(sender_psid, response.data);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        }
       }
       else{
         response = {
