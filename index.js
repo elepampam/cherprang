@@ -56,6 +56,7 @@ function handleMessage(sender_psid, received_message) {
         handleDigimon(sender_psid, text[1])
       }
       else if (received_message.text.toLowerCase() === 'nonton') { //nonton
+        console.log('masuk sini')
         axios.get('https://nonton-api.herokuapp.com/bioskop')
         .then(response => {
           let cities = response.data.data.cities;
