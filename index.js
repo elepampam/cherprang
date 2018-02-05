@@ -68,7 +68,7 @@ function handleBioskop(sender_psid, res){
       ],
     });
   });
-  callSendAPI(senderPsid, response);
+  callSendAPI(sender_psid, response);
 }
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
