@@ -59,6 +59,7 @@ function handleMessage(sender_psid, received_message) {
         console.log('masuk sini')
         axios.get('https://nonton-api.herokuapp.com/bioskop')
         .then(response => {
+          console.log(response.data.data)
           let cities = response.data.data.cities;
           let text = "";
           cities.map(city => {
